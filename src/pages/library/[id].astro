@@ -1,4 +1,17 @@
 ---
+// src/pages/library/[id].astro の先頭
+
+export async function getStaticPaths() {
+  return [
+    { params: { id: '1' } },
+    { params: { id: '2' } },
+    // 存在するIDを指定する
+  ];
+}
+
+const { id } = Astro.params;
+
+
 import Librarylayout from '../../layouts/Librarylayout.astro';
 import { getBooks, type Book } from '../../data/getBooks';
 
