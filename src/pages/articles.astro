@@ -1,0 +1,34 @@
+---
+import Mainlayout from '../layouts/Mainlayout.astro';
+import articles from '../data/articles';
+
+console.log("読み込んだデータ: ", articles);
+---
+
+
+<Mainlayout title="Articles|檸檬のホームページ">
+    <section class="card">
+        <h1>記事</h1>
+        <p>日々の雑記や，noteに投稿した記事にアーカイブです．</p>
+    </section>
+    <div class="article-list">
+        {articles.map((article) => (
+            <article class="card article-card">
+                <div class="article-meta">
+                    <time>{article.date}</time>　
+                    {article.isExternal && <span class="badge-note">note</span>}
+                </div>
+                <h2>{article.title}</h2>
+                <p>{article.summary}</p>
+                <a 
+                    href={article.url} 
+                    target={article.isExternal ? "_blank" : "_self"} 
+                    rel={article.isExternal ? "noopener noreferrer" : ""} 
+                    class="btn-secondary"
+                >
+                    {article.isExternal ? "noteで読む ↗" : "記事を読む"}
+                </a>
+            </article>
+        ))}
+    </div>
+</Mainlayout>

@@ -1,0 +1,60 @@
+---
+import Mainlayout from '../layouts/Mainlayout.astro';
+import articles from '../data/articles';
+import works from '../data/works'; // ★作品データをインポート
+
+// 先頭（最新）から最大3件を取り出す
+const recentArticles = articles.slice(0, 3);
+// ★最新の作品を1件取得（リストの先頭を取得）
+const latestWork = works[0];
+---
+
+<Mainlayout title="檸檬のホームページ">
+	<section class="card">
+		<img src="/images/icon.png" alt="プロフィール" class="profile-img"/>
+		<h1>檸檬のホームページ</h1>
+		<p>元気がほしいです．</p>
+		<div class="social-links">
+			<a href="https://x.com/ningmeng739397" target="_blank" rel="noopener noreferrer" class="btn-x">
+			X(旧ツイッター)
+			</a>
+			<a href="https://note.com/mm_mm874" target="_blank" rel="noopener noreferrer" class="btn-x">
+			note
+			</a>
+			<a href="/about" class="btn-secondary">プロフィール</a>
+		</div>
+	</section>
+	<section class="card">
+        <h2>最新の記事</h2>
+        <div class="pickup-list">
+            {recentArticles.map((article) => (
+                <div class="pickup-item">
+                    <span class="date">{article.date}</span>　
+                    <a href={article.url} target={article.isExternal ? "_blank" : "_self"}>
+                        {article.title}
+                    </a>
+                </div>
+            ))}
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <a href="/articles" class="btn-primary">記事一覧を見る →</a>
+        </div>
+    </section>
+	<section class="card pickup-work">
+            <div class="section-header">
+                <h2>関数アート</h2>
+                <a href="/works" class="sub-link">作品一覧を見る →</a>
+            </div>
+			<div class="work-content">
+                <h3>{latestWork.title}</h3>
+                <p>{latestWork.description}</p>
+                <div class="desmos-wrapper">
+                    <iframe 
+                        src={latestWork.desmosUrl} 
+                        title={latestWork.title}
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+        </section>
+</Mainlayout>

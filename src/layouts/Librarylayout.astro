@@ -1,0 +1,82 @@
+---
+const { title } = Astro.props;
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <!-- ファビコンの指定 -->
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="margin: 0; font-family: 'Zen Kaku Gothic New', sans-serif; background-color: #f8fafc; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column;">
+    
+    <!-- 共通ヘッダー -->
+    <header style="background-color: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0.8rem 1.5rem; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);">
+      <nav style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        
+        <!-- 左側：ホームページ（外部/サイトトップ）へ戻る（リンク表現で区別） -->
+        <div>
+          <a 
+            href="/" 
+            style="display: inline-flex; align-items: center; gap: 0.3rem; color: #64748b; text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.6rem; border-radius: 6px; transition: color 0.2s;"
+            class="home-link"
+          >
+            ‹ 檸檬のホームページへ戻る
+          </a>
+        </div>
+
+        <!-- 右側：ライブラリ操作ボタン（主要ボタンとしてデザイン強調） -->
+        <div style="display: flex; gap: 0.6rem; align-items: center;">
+          <a 
+            href="/library/library" 
+            style="display: inline-block; padding: 0.45rem 0.95rem; background-color: #f1f5f9; color: #1e293b; text-decoration: none; border-radius: 6px; font-size: 0.88rem; font-weight: 700; border: 1px solid #cbd5e1; transition: all 0.2s;"
+            class="action-btn"
+          >
+            蔵書一覧トップへ戻る
+          </a>
+
+          <a 
+            href="/library/collections" 
+            style="display: inline-block; padding: 0.45rem 0.95rem; background-color: #707070; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 0.88rem; font-weight: 700; border: 1px solid #2563eb; transition: all 0.2s;"
+            class="primary-btn"
+          >
+            特集
+          </a>
+        </div>
+
+      </nav>
+    </header>
+
+    <!-- メインコンテンツ領域 -->
+    <main style="flex: 1;">
+      <slot />
+    </main>
+
+    <!-- フッター領域 -->
+    <footer style="text-align: center; padding: 2rem 1rem; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; background-color: #ffffff; margin-top: auto;">
+      © 2026 檸檬
+    </footer>
+
+    <style>
+      .home-link:hover {
+        color: #0f172a !important;
+        background-color: #f1f5f9;
+      }
+      .action-btn:hover {
+        background-color: #e2e8f0 !important;
+        border-color: #94a3b8 !important;
+      }
+      .primary-btn:hover {
+        background-color: #2563eb !important;
+      }
+    </style>
+  </body>
+</html>

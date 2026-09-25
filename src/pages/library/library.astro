@@ -1,0 +1,213 @@
+---
+import Librarylayout from '../../layouts/Librarylayout.astro';
+import { getBooks, type Book } from '../../data/getBooks';
+
+const books: Book[] = getBooks();
+---
+
+<Librarylayout title="蔵書一覧">
+  <div style="max-width: 1100px; margin: 0 auto; padding: 2rem 1rem;">
+
+    <!-- ヘッダーエリア -->
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
+      <h1 style="font-size: 1.8rem; font-weight: 700; color: #1e293b; margin: 0;">
+        蔵書一覧
+      </h1>
+      <span id="resultCount" style="font-size: 0.95rem; font-weight: 600; color: #64748b;">
+        全 {books.length} 冊
+      </span>
+    </div>
+
+    <!-- 検索・フィルター領域 -->
+    <div style="background: #ffffff; padding: 1.25rem; border-radius: 12px; margin-bottom: 2.5rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+        
+        <!-- 検索入力 ＆ 灰色の検索ボタン -->
+        <div style="flex: 1 1 300px; display: flex; gap: 0.5rem;">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="タイトル、著者、出版社、メモ、レビュー、タグなど..." 
+            style="flex: 1; padding: 0.65rem 0.9rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; box-sizing: border-box;"
+          />
+          <button 
+            id="searchBtn"
+            type="button"
+            style="padding: 0.65rem 1.1rem; background-color: #64748b; color: #ffffff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color 0.2s;"
+            onmouseover="this.style.backgroundColor='#475569'"
+            onmouseout="this.style.backgroundColor='#64748b'"
+          >
+            検索
+          </button>
+        </div>
+
+        <!-- 状態ドロップダウン（固定幅調整） -->
+        <div style="width: 160px; flex-shrink: 0;">
+          <select id="statusFilter" style="width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.88rem; background-color: #fff; cursor: pointer; outline: none; box-sizing: border-box;">
+            <option value="">すべての状態</option>
+            <option value="読み終わった">読み終わった</option>
+            <option value="読んでる">読んでる</option>
+            <option value="積読">積読</option>
+            <option value="読みたい">読みたい</option>
+          </select>
+        </div>
+
+        <!-- 媒体ドロップダウン（固定幅調整） -->
+        <div style="width: 175px; flex-shrink: 0;">
+          <select id="kindleFilter" style="width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.88rem; background-color: #fff; cursor: pointer; outline: none; box-sizing: border-box;">
+            <option value="">すべての媒体</option>
+            <option value="kindle">Kindle のみ</option>
+            <option value="paper">紙の書籍 のみ</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 書籍一覧グリッド -->
+    <div id="bookGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+      {books.map((book) => {
+        // キーワード検索対象（タイトル、著者、出版社、タグ、メモ、レビュー、カテゴリ、ジャンルを結合）
+        const searchContent = [
+          book.title,
+          book.author,
+          book.publisher,
+          book.tags.join(' '),
+          book.memo,
+          book.review,
+          book.category,
+          book.bookType
+        ].join(' ').toLowerCase();
+
+        return (
+          <a 
+            href={`/library/${book.id}`} 
+            class="book-card"
+            data-search={searchContent}
+            data-status={book.status}
+            data-kindle={book.isKindle ? 'true' : 'false'}
+            style="text-decoration: none; color: inherit; display: block;"
+          >
+            <div class="card-inner" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s ease-in-out; box-sizing: border-box;">
+              
+              <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap;">
+                  {book.isKindle ? (
+                    <span style="background: #ff9900; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                      Kindle
+                    </span>
+                  ) : (
+                    <span style="background: #64748b; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                      紙の書籍
+                    </span>
+                  )}
+
+                  {book.status && (
+                    <span style="background: #f1f5f9; color: #334155; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 6px;">
+                      {book.status}
+                    </span>
+                  )}
+                </div>
+
+                <h2 style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 0 0 0.4rem 0; line-height: 1.4;">
+                  {book.title}
+                </h2>
+                <p style="font-size: 0.9rem; color: #64748b; margin: 0 0 0.2rem 0;">
+                  {book.author}
+                </p>
+                {book.publisher && (
+                  <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 1rem 0;">
+                    {book.publisher}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <div style="font-size: 0.85rem; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 0.75rem; margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                  {book.rating ? <span style="color: #d97706; font-weight: 700;">★ {book.rating}</span> : <span></span>}
+                  {book.pageCount && <span>{book.pageCount} p</span>}
+                </div>
+
+                {book.tags.length > 0 && (
+                  <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.6rem;">
+                    {book.tags.map(tag => (
+                      <span style="font-size: 0.75rem; background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; padding: 0.15rem 0.5rem; border-radius: 4px;">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+
+  <style>
+    .book-card:hover .card-inner {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+      border-color: #cbd5e1 !important;
+    }
+    input:focus, select:focus {
+      border-color: #64748b !important;
+      box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.15);
+    }
+  </style>
+
+  <script>
+    function filterBooks() {
+      const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+      const statusFilter = document.getElementById('statusFilter') as HTMLSelectElement;
+      const kindleFilter = document.getElementById('kindleFilter') as HTMLSelectElement;
+      const resultCount = document.getElementById('resultCount');
+      
+      const query = searchInput?.value.toLowerCase().trim() || '';
+      const selectedStatus = statusFilter?.value || '';
+      const selectedKindle = kindleFilter?.value || '';
+
+      const cards = document.querySelectorAll<HTMLElement>('.book-card');
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const searchContent = card.dataset.search || '';
+        const status = card.dataset.status || '';
+        const isKindle = card.dataset.kindle === 'true';
+
+        const matchesQuery = !query || searchContent.includes(query);
+        const matchesStatus = !selectedStatus || status === selectedStatus;
+
+        let matchesKindle = true;
+        if (selectedKindle === 'kindle') {
+          matchesKindle = isKindle;
+        } else if (selectedKindle === 'paper') {
+          matchesKindle = !isKindle;
+        }
+
+        if (matchesQuery && matchesStatus && matchesKindle) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (resultCount) {
+        resultCount.textContent = `表示中: ${visibleCount} / 全 ${cards.length} 冊`;
+      }
+    }
+
+    document.getElementById('searchBtn')?.addEventListener('click', filterBooks);
+    document.getElementById('searchInput')?.addEventListener('input', filterBooks);
+    document.getElementById('searchInput')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') filterBooks();
+    });
+    document.getElementById('statusFilter')?.addEventListener('change', filterBooks);
+    document.getElementById('kindleFilter')?.addEventListener('change', filterBooks);
+
+    filterBooks();
+  </script>
+</Librarylayout>

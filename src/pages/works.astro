@@ -1,0 +1,47 @@
+---
+// src/pages/works.astro
+import Mainlayout from '../layouts/Mainlayout.astro';
+import works from '../data/works';
+---
+
+<Mainlayout title="Works | 檸檬のホームページ">
+    <section class="card">
+        <h1>Works</h1>
+        <p>Desmosなどで作成した作品のギャラリーです。</p>
+    </section>
+
+    <div class="works-list">
+        {works.map((work) => (
+            <article class="card work-card">
+                <div class="work-header">
+                    <h2>{work.title}</h2>
+                    <span class="date">{work.date}</span>
+                </div>
+                
+                <p>{work.description}</p>
+
+                <div class="desmos-link-wrapper">
+                    <a href={work.desmosUrl} target="_blank" rel="noopener noreferrer" class="desmos-link">Desmosで開く ↗</a>
+                </div>
+
+                {/* タグ表示 (任意) */}
+                {work.tags && (
+                    <div class="tag-list">
+                        {work.tags.map((tag) => (
+                            <span class="tag">#{tag}</span>
+                        ))}
+                    </div>
+                )}
+
+                {/* Desmos 埋め込みコンテナ */}
+                <div class="desmos-wrapper">
+                    <iframe 
+                        src={work.desmosUrl} 
+                        title={work.title}
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </article>
+        ))}
+    </div>
+</Mainlayout>
