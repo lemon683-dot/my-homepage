@@ -42,105 +42,105 @@ const hasReview = rawReview && rawReview !== false && String(rawReview).trim() !
 ---
 
 <Librarylayout title={book.title}>
-  <div style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
+<div style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
     
     <!-- 一覧へ戻るボタン -->
     <div style="margin-bottom: 1.5rem;">
-      <a 
+    <a 
         href="/library/library" 
         style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; background-color: #ffffff; color: #475569; text-decoration: none; border-radius: 6px; font-size: 0.88rem; font-weight: 600; border: 1px solid #cbd5e1; transition: background-color 0.2s;"
         onmouseover="this.style.backgroundColor='#f8fafc'"
         onmouseout="this.style.backgroundColor='#ffffff'"
-      >
+    >
         ← 一覧へ戻る
-      </a>
+    </a>
     </div>
 
     <!-- 詳細カード -->
     <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
-      
-      <!-- 媒体・読書状況バッジ -->
-      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+    
+    <!-- 媒体・読書状況バッジ -->
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
         {book.isKindle ? (
-          <span style="background: #ff9900; color: #ffffff; font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 6px;">
+        <span style="background: #ff9900; color: #ffffff; font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 6px;">
             Kindle
-          </span>
+        </span>
         ) : (
-          <span style="background: #64748b; color: #ffffff; font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 6px;">
+        <span style="background: #64748b; color: #ffffff; font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 6px;">
             紙の書籍
-          </span>
+        </span>
         )}
 
         {book.bookType && (
-          <span style="background: #e2e8f0; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 6px;">
+        <span style="background: #e2e8f0; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 6px;">
             {book.bookType}
-          </span>
+        </span>
         )}
 
         {book.status && (
-          <span style="background: #f1f5f9; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 6px;">
+        <span style="background: #f1f5f9; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 6px;">
             {book.status}
-          </span>
+        </span>
         )}
-      </div>
+    </div>
 
-      <!-- タイトル & 作者名 -->
-      <h1 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem 0; line-height: 1.3;">
+    <!-- タイトル & 作者名 -->
+    <h1 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem 0; line-height: 1.3;">
         {book.title}
-      </h1>
+    </h1>
 
-      <p style="font-size: 1.05rem; color: #475569; margin: 0 0 1.25rem 0;">
+    <p style="font-size: 1.05rem; color: #475569; margin: 0 0 1.25rem 0;">
         著者: {book.author}
-      </p>
+    </p>
 
-      <!-- ★ 評価（星表示） -->
-      <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+    <!-- ★ 評価（星表示） -->
+    <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
         <span style="font-size: 0.9rem; font-weight: 700; color: #64748b;">評価:</span>
         <span style="font-size: 1.25rem; font-weight: 700; color: #d97706; letter-spacing: 2px;">
-          {renderStars(book.rating)}
+        {renderStars(book.rating)}
         </span>
-      </div>
+    </div>
 
-      <!-- メタ詳細情報グリッド -->
-      <div style="background: #f8fafc; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.75rem; border: 1px solid #f1f5f9;">
+    <!-- メタ詳細情報グリッド -->
+    <div style="background: #f8fafc; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.75rem; border: 1px solid #f1f5f9;">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(20px, 1fr)); gap: 0.8rem; font-size: 0.88rem; color: #334155;">
-          {book.publisher && <div><strong style="color: #64748b;">出版社:</strong> {book.publisher}</div>}
-          {book.pubYear && <div><strong style="color: #64748b;">発行年:</strong> {book.pubYear}年</div>}
-          {book.pageCount && <div><strong style="color: #64748b;">ページ数:</strong> {book.pageCount} p</div>}
-          {book.isbn && <div><strong style="color: #64748b;">ISBN-13:</strong> {book.isbn}</div>}
+        {book.publisher && <div><strong style="color: #64748b;">出版社:</strong> {book.publisher}</div>}
+        {book.pubYear && <div><strong style="color: #64748b;">発行年:</strong> {book.pubYear}年</div>}
+        {book.pageCount && <div><strong style="color: #64748b;">ページ数:</strong> {book.pageCount} p</div>}
+        {book.isbn && <div><strong style="color: #64748b;">ISBN-13:</strong> {book.isbn}</div>}
         </div>
-      </div>
+    </div>
 
-      <!-- タグ一覧 -->
-      {book.tags && book.tags.length > 0 && (
+    <!-- タグ一覧 -->
+    {book.tags && book.tags.length > 0 && (
         <div style="margin-bottom: 2rem;">
-          <h3 style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-bottom: 0.5rem;">タグ</h3>
-          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+        <h3 style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-bottom: 0.5rem;">タグ</h3>
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
             {book.tags.map(tag => (
-              <span style="font-size: 0.8rem; background: #f1f5f9; color: #334155; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 500;">
+            <span style="font-size: 0.8rem; background: #f1f5f9; color: #334155; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 500;">
                 #{tag}
-              </span>
+            </span>
             ))}
-          </div>
         </div>
-      )}
+        </div>
+    )}
 
-      <!-- 💬 レビュー・感想エリア（読書メモ欄は削除） -->
-      <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+    <!-- 💬 レビュー・感想エリア（読書メモ欄は削除） -->
+    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
         <h2 style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin: 0 0 0.8rem 0; display: flex; align-items: center; gap: 0.4rem;">
-          レビュー・感想
+        レビュー・感想
         </h2>
         {hasReview ? (
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem; border-radius: 8px; color: #334155; line-height: 1.7; white-space: pre-wrap; font-size: 0.95rem;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem; border-radius: 8px; color: #334155; line-height: 1.7; white-space: pre-wrap; font-size: 0.95rem;">
             {rawReview}
-          </div>
+        </div>
         ) : (
-          <div style="background: #f8fafc; border: 1px border-style: dashed; border-color: #cbd5e1; padding: 1.25rem; border-radius: 8px; color: #94a3b8; font-size: 0.9rem; text-align: center;">
+        <div style="background: #f8fafc; border: 1px border-style: dashed; border-color: #cbd5e1; padding: 1.25rem; border-radius: 8px; color: #94a3b8; font-size: 0.9rem; text-align: center;">
             まだレビューはありません
-          </div>
+        </div>
         )}
-      </div>
+    </div>
 
     </div>
-  </div>
+    </div>
 </Librarylayout>
