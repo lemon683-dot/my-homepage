@@ -26,6 +26,8 @@ interface Props {
   };
 }
 
+const { book } = Astro.props;
+
 // ★評価を星アイコン文字列に変換するヘルパー関数
 function renderStars(rating?: number | string) {
   if (!rating) return '未評価';
