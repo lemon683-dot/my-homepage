@@ -1,14 +1,6 @@
 ---
 // src/pages/library/[id].astro の先頭
 
-export async function getStaticPaths() {
-  return [
-    { params: { id: '1' } },
-    { params: { id: '2' } },
-    // 存在するIDを指定する
-  ];
-}
-
 const { id } = Astro.params;
 
 
@@ -33,8 +25,6 @@ interface Props {
     readAt?: string;
   };
 }
-
-const { book } = Astro.props;
 
 // ★評価を星アイコン文字列に変換するヘルパー関数
 function renderStars(rating?: number | string) {
