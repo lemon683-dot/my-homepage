@@ -1,5 +1,13 @@
 const articles = [
   {
+    id: "4",
+    title: "なぜデプロイできなかったのか",
+    date: "2026.11.02",
+    summary: "動的サイトなので，astro.config.mjs の設定をする必要があった．",
+    url: "/articles/second-post", // <-- 作成したファイル名(.mdを除いたパス)を指定
+    isExternal: false, // 自分のサイト内なので false
+  },
+  {
     id: "3",
     title: "ホームページを制作中！！！",
     date: "2026.09.24",
